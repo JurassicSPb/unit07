@@ -12,11 +12,15 @@ public class Main {
 
         OperationsBetweenAccounts op = new OperationsBetweenAccounts();
         try {
-            op.transferMoney(account1, account2, 100);
+            op.transferMoney(account1, account2, 50);
+            op.transferMoney(account1, account2, 50);
+
         } catch (OperationNotSupportedException e) {
             e.printStackTrace();
         }
         System.out.println(account1.getBalance());
         System.out.println(account2.getBalance());
+        System.out.println(account1.getBalanceStatistics());
+        System.out.println(account2.getBalanceStatistics());
     }
 }
