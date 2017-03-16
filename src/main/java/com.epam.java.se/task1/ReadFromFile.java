@@ -22,13 +22,13 @@ public class ReadFromFile extends Thread {
         try {
             while (run) {
                 System.out.println(getName() + "is reading\n");
-                Thread.sleep(100);
+                Thread.sleep(500);
                 getListOfAccounts();
-                interrupt();
+                showAccounts();
+                stopThread();
             }
         } catch (InterruptedException e) {
-            stopThread();
-            showAccounts();
+            e.printStackTrace();
         }
     }
 

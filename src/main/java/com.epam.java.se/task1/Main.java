@@ -1,19 +1,25 @@
 package com.epam.java.se.task1;
 
 import javax.naming.OperationNotSupportedException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Мария on 15.03.2017.
  */
 public class Main {
-    public static void main(String[] args) throws InterruptedException{
-        Account account1 = new Account(200);
-        Account account2 = new Account(100);
+    public static void main(String[] args) throws InterruptedException {
+        Account account1 = new Account(1000);
+
+        Account account2 = new Account(500);
 
         OperationsBetweenAccounts op = new OperationsBetweenAccounts();
         try {
             op.transferMoney(account1, account2, 50);
-            op.transferMoney(account1, account2, 50);
+            op.transferMoney(account1, account2, 200);
+            op.transferMoney(account1, account2, 100);
+            op.transferMoney(account2, account1, 600);
+            op.transferMoney(account2, account1, 100);
 
         } catch (OperationNotSupportedException e) {
             e.printStackTrace();
@@ -40,7 +46,7 @@ public class Main {
         reader5.start();
         reader6.start();
 
-        Thread.sleep(1000);
+        Thread.sleep(100);
 
         reader.join();
         reader2.join();
@@ -49,7 +55,16 @@ public class Main {
         reader5.join();
         reader6.join();
 
-        reader.getListOfAccounts();
-        reader.showAccounts();
+        ExecutorService executor = Executors.newCachedThreadPool();
+        executor.execute(reader);
+        executor.execute(reader2);
+        executor.execute(reader3);
+        executor.execute(reader4);
+        executor.execute(reader5);
+        executor.execute(reader6);
+
+        Thread.sleep(100);
+
+        executor.shutdown();
     }
 }
